@@ -25,6 +25,12 @@ class Instructor extends Person{
     grade(student,subject){
         console.log(`${student} receives a perfect score ${subject}`);
     }
+
+    changeGrade(student){
+      var grading;
+      grading = getRandomInt(-50,50);
+      return (student.grade += grading);
+    }
 }
 
 class Student extends Person{
@@ -33,6 +39,7 @@ class Student extends Person{
         this.previousBackground = attrS.previousBackground;
         this.className = attrS.className;
         this.favSubjects = attrS.favSubjects;
+        this.grade = 50;
     }
     listSubjects(){
         console.log("List of Subjects: ")
@@ -46,10 +53,17 @@ class Student extends Person{
     sprintChallenge(subject){
         console.log(`${this.name} has begun a sprint challenge on ${subject}`);
     }
+    gradCheck(){
+      if(this.grade >= 70){
+        console.log(`${this.name} is elligible to graduate from Lambda! Passing grade: ${this.grade}`)
+      } else{
+        console.log(`Current grade: ${this.grade}, ${this.name} is not elligible to graduate just yet, don't worry keep grinding!`)
+      }
+    }
 
 }
 
-class ProjectManager extends Person{
+class ProjectManager extends Instructor{
     constructor(attrPM){
         super(attrPM);
         this.gradClassName = attrPM.gradClassName;
@@ -74,3 +88,23 @@ const Ricky = new Student({
 })
 Ricky.speak()
 Ricky.listSubjects()
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+}
+
+const Miyagi = new ProjectManager({
+  name: 'Mr.Miyagi',
+  age: 65,
+  location: "Okinawa",
+  specialty: "Karate",
+  favLanguage: "Javascript",
+  catchPhrase: "Wax On Wax Off",
+  gradClassName: "Web1",
+  favInstructor: "Master Splinter"
+})
+
+Miyagi.changeGrade(Ricky)
+Ricky.gradCheck()
